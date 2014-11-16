@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>RN: Submit News</title>
+
+        <link rel="stylesheet" href="css/lib/bootstrap.css">
+        <link rel="stylesheet" href="css/lib/bootstrap-responsive.css">
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+
+        <div class="container">
+            <!-- <bootstrap> -->
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <a class="brand hidden-phone">Rapid News</a>
+                    <a class="brand visible-phone">RN</a>
+                    <ul class="nav">
+                        <li><a href="/">Links</a></li>
+                        <li class="active"><a href="#">Submit</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="submit-form">
+                <form action="/new">
+                    <fieldset>
+                        <legend>Submit some news!</legend>
+                        <label>Link</label>
+                        <input type="text" placeholder="http://...">
+                        <label>Title</label>
+                        <input type="text" placeholder="news headline or description">
+                        <div class="control-group">
+                            <button type="submit" class="btn">Submit!</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        
+            <!-- </bootstrap> -->
+        </div>
+
+        <script src="js/lib/jquery.js"></script>
+        <script src="js/lib/bootstrap.js"></script>
+        <script>window.RAPID = {};</script>
+        <script src="js/submit.js"></script>
+    </body>
+</html>
