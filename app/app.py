@@ -3,15 +3,18 @@ from rapid import (top_articles, search_articles, insert_article)
 from hdxapi import get_datasets_with_active_datastores
 
 app = Flask(__name__, static_folder="../static", static_url_path="/static")
-url = "https://data.hdx.rwlabs.org/api/3/action/package_search?q=ebola"
+#url = "https://data.hdx.rwlabs.org/api/3/action/package_search?q=ebola"
+url = "https://data.hdx.rwlabs.org/api/3/action/package_search"
 
 @app.route('/')
 def index():
-    items = get_datasets_with_active_datastores(url)
-    #items = ["abc","def","ghi"]
+    # TODO improve the default list to be the latest 10 datasets or something relevant
+    row_limit = 10
+    items = get_datasets_with_active_datastores(url + "?" + "rows=" + str(row_limit))
     return render_template('index.jinja2.html', 
                            rows=items)
 
+# NEXT figure out how to pass the search query and row limit
 @app.route('/search/<query>')
 def search(query):
     articles = search_articles(query)
