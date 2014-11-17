@@ -7,6 +7,7 @@
         {{ link_tag('main') }}
 {% endblock %}
 
+{% set base_url = 'http://data.hdx.rwlabs.org/dataset/' %}
 {% block body %}
             <table class="table table-hover table-striped">
                 <thead>
@@ -19,8 +20,8 @@
                 <tbody>
                     {% for row in rows %}
                         <tr style="display: none;">
-                            <td><span>{{ row.name }}</span></td>
-                            <td><a href="{{ row }}">{{ row.name }}</a></td>
+                            <td><a href="{{ base_url ~ row.package_name}}">{{ row.package_title }}</span></td>
+                            <td><span>{{ row.resource_name }}</span></td>
                             <td><span>just now</span></td>
                         </tr>
                     {% endfor %}

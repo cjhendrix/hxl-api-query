@@ -3,39 +3,13 @@ import json
 from sys import stdout
 #TODO  Make this into a class(es) that can be used externally passing only query terms and limits
 
-def get_datasets_with_active_datastores(url):  #2nd version main 
-    dataset_list = []
+def find_active_datastores(url):
+    datastore_active_resources = []
     parsed_json = get_json_from_ckan(url)
-    results = parsed_json.get("result").get("results")
-    for package in results:
-        if package.get("num_resources") > 0:
-            resources = package.get("resources")
-            for resource in resources:
-                resource_id = resource.get("id")
-                resource_dict = check_datastore_active(resource_id)
-                if resource_dict == False:
-                    continue
-                else: 
-                    resource_dict["package_title"] = package.get("title")
-                    resource_dict["package_name"] = package.get("name")
-                    dataset_list.append(resource_dict)
-    return dataset_list
-        
-def check_datastore_active(resource_id):
-    call = "https://data.hdx.rwlabs.org/api/3/action/resource_show?id=" + resource_id
-    resource_dict = {}
-    response = urlopen(call)
-    jsonstring = response.read()
-    data = json.loads(jsonstring)
-    if data.get("result").get("datastore_active") == True:
-        resource_dict = {}
-        resource_dict["resource_name"] = data.get("result").get("name")
-    if len(resource_dict) > 0:
-        return resource_dict
-    else:
-        return False
-    
-
+    dataset_list = get_all_dataset_ids(parsed_json)
+    resource_list = get_all_resource_ids(parsed_json)
+    datastore_active_resources = check_datastore_active(resource_list)
+    return datastore_active_resources
 
 def get_json_from_ckan(url):
     try:
@@ -67,7 +41,7 @@ def get_all_resource_ids(parsed_json):
                                 resource_id = resource.get("id")
                                 resource_list.append(resource_id)
     return resource_list
-'''
+ 
 def check_datastore_active(resource_list):
     ds_active_list = []
     for item in resource_list:
@@ -81,7 +55,7 @@ def check_datastore_active(resource_list):
             dict["name"] = data.get("result").get("name")
             ds_active_list.append(dict)
     return ds_active_list
- '''
+ 
 def humanize_resources(resource_list):
     for res in resource_list:
         call = "https://data.hdx.rwlabs.org/api/3/action/resource_show?id=" + resource_id

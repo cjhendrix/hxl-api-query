@@ -1,13 +1,13 @@
 from flask import Flask, render_template, request
 from rapid import (top_articles, search_articles, insert_article)
-from hdxapi import find_active_datastores
+from hdxapi import get_datasets_with_active_datastores
 
 app = Flask(__name__, static_folder="../static", static_url_path="/static")
-url = "https://data.hdx.rwlabs.org/api/3/action/package_search?q=ebola&rows=100"
+url = "https://data.hdx.rwlabs.org/api/3/action/package_search?q=ebola"
 
 @app.route('/')
 def index():
-    items = find_active_datastores(url)
+    items = get_datasets_with_active_datastores(url)
     #items = ["abc","def","ghi"]
     return render_template('index.jinja2.html', 
                            rows=items)
