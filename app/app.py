@@ -4,23 +4,25 @@ from hdxapi import get_datasets_with_active_datastores
 
 app = Flask(__name__, static_folder="../static", static_url_path="/static")
 #url = "https://data.hdx.rwlabs.org/api/3/action/package_search?q=ebola"
-url = "https://data.hdx.rwlabs.org/api/3/action/package_search"
+url = "https://data.hdx.rwlabs.org/api/3/action/package_search?q="
+temp = [{"package_title": "Really cool data","package_name": "really-cool-data","resource_name": "cool.csv"}]
+temp2 = [{"package_title": "More data","package_name": "really-cool-data","resource_name": "cool.csv"}]
 
 @app.route('/')
 def index():
     # TODO improve the default list to be the latest 10 datasets or something relevant
     row_limit = 10
-    items = get_datasets_with_active_datastores(url + "?" + "rows=" + str(row_limit))
+    #items = get_datasets_with_active_datastores(url + "?" + "rows=" + str(row_limit))
     return render_template('index.jinja2.html', 
-                           rows=items)
+                           rows=temp)
 
-# NEXT figure out how to pass the search query and row limit
-@app.route('/search/<query>')
-def search(query):
-    articles = search_articles(query)
-    return render_template('index.jinja2.html', 
-                           query=query, 
-                           articles=articles)
+@app.route('/search', methods=["POST"])
+def search():
+    query = request.form['q']
+    rows = request.form['rows']
+    print url + query + rows
+    return render_template('index.jinja2.html', rows=get_datasets_with_active_datastores(url + query + "&rows=" + rows), query=query, url=url + query + "&rows=" + rows)
+    #return render_template('index.jinja2.html', rows=[{"package_title": url + query + "&rows=" + rows}])
 
 @app.route('/submit/', methods=["GET", "POST"])
 def submit():

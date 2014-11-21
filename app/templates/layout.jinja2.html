@@ -15,46 +15,40 @@
     <body>
 
         <div class="container">
-            <!-- <bootstrap> -->
-            <div>
-                <button type="button" class="btn btn-default">Endpoint</button>
-                <span>data.hdx.rwlabs.org</span>
-                <!-- add dropdown for different endpoints (stag, dev) -->
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-default">Endpoint</button>
+                    <span>data.hdx.rwlabs.org</span>
+                </div>
+                <!-- TODO add dropdown for different endpoints (stag, dev) -->
             </div>
-            <div class="navbar">
-                <div class="navbar-inner">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="dropdown">
-                              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                                Find Active Datastores
-                                <span class="caret"></span>
-                              </button>
-                              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">TBD</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">TBD</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">TBD</a></li>
-                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">TBD</a></li>
-                              </ul>
-                            </div>
-                        </div>
-                        <div class="col-mid-9">
-                            <div>
-                                <form class="navbar-search" action="/search">
-                                    <small><i class="icon-search"></i> Search</small>
-                                    <input name="query" type="text" class="search-query" placeholder="query string">
-                                </form>
-                            </div>
+            <div class="row">
+                <div class="col-md-3">
+                      <button class="btn btn-default">
+                        Find Active Datastores
+                      </button>
+                </div>
+                <div class="col-md-9">
+                    <div class="control-group">
+                        <div class="controls">
+                            <form method="post" action="/search">
+                                <input name="q" type="text" placeholder="query string" size="15">
+                                <input name="rows" type="text" placeholder="size limit" size="5">
+                                <button type="submit">Send</button>
+                            </form>
+
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+            
 
             {% block body %}
             {% endblock %}
 
             <!-- </bootstrap> -->
-        </div>
+        
 
         {{ script_tag('lib/jquery') }}
         {{ script_tag('lib/bootstrap') }}
