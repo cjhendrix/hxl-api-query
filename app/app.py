@@ -21,12 +21,12 @@ def index():
         return render_template('index.jinja2.html', 
                            rows=temp)
 
-@app.route('/search', methods=["POST"])
+@app.route('/datastores', methods=["POST"])
 def search():
     query = request.form['q']
     rows = request.form['rows']
     print url + query + rows
-    return render_template('index.jinja2.html', rows=get_datasets_with_active_datastores(url + query + "&rows=" + rows), query=query, url=url + query + "&rows=" + rows)
+    return render_template('datastore_active.jinja2.html', rows=get_datasets_with_active_datastores(url + query + "&rows=" + rows), query=query, url=url + query + "&rows=" + rows)
     #return render_template('index.jinja2.html', rows=[{"package_title": url + query + "&rows=" + rows}])
 
 @app.route('/submit/', methods=["GET", "POST"])

@@ -7,31 +7,25 @@
         {{ link_tag('main') }}
 {% endblock %}
 
-{% set base_url = 'http://data.hdx.rwlabs.org/dataset/' %}
+{% set base_dataset_url = 'http://data.hdx.rwlabs.org/dataset/' %}
+{% set base_org_url = 'http://data.hdx.rwlabs.org/organization/' %}
 {% block body %}
-            {% if url %}
-                <div class="container">
-                    <div class="row"> 
-                        <div class="col-md-12">
-                            Searched: <a target="_blank" href="{{url}}">{{ url }}</a>
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
+            <h3>10 most recently updated datasets</h3>
             <table class="table table-hover table-striped">
                 <thead>
                     <tr>
-                        <th>Dataset</th>
-                        <th>Organization</th>
                         <th>Updated</th>
+                        <th>Organization</th>
+                        <th>Dataset</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for row in rows %}
                         <tr style="display: none;">
-                            <td><a href="{{ base_url ~ row.package_name}}">{{ row.package_title }}</span></td>
-                            <td><a href="{{ base_url ~ row.org_name}}">{{ row.org_title }}</span></td>
-                            <td><span>{{ row.metadata_updated }}</span></td>
+                            <td><span>{{ row.metadata_modified }}</span></td>
+                            <td><a href="{{ base_org_url ~ row.org_name}}" 
+                            target="blank">{{ row.org_title }}</a></td>
+                            <td><a href="{{ base_dataset_url ~ row.package_name}}" target="_blank">{{ row.package_title }}</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>

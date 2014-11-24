@@ -36,6 +36,7 @@ def get_recently_updated_datasets(url):
     parsed_json = get_json_from_ckan(url)
     results = parsed_json.get("result").get("results")
     for package in results:
+        resource_dict = {}
         resource_dict["package_title"] = package.get("title")
         resource_dict["package_name"] = package.get("name")
         resource_dict["metadata_modified"] = \
