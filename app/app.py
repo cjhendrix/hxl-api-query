@@ -1,19 +1,24 @@
 from flask import Flask, render_template, request
-from rapid import (top_articles, search_articles, insert_article)
-from hdxapi import get_datasets_with_active_datastores
+from hdxapi import get_datasets_with_active_datastores, get_recently_updated_datasets
+
 
 app = Flask(__name__, static_folder="../static", static_url_path="/static")
 #url = "https://data.hdx.rwlabs.org/api/3/action/package_search?q=ebola"
 url = "https://data.hdx.rwlabs.org/api/3/action/package_search?q="
 temp = [{"package_title": "Really cool data","package_name": "really-cool-data","resource_name": "cool.csv"}]
 temp2 = [{"package_title": "More data","package_name": "really-cool-data","resource_name": "cool.csv"}]
+endpoint = "https://data.hdx.rwlabs.org/api/3/action/"
+action_package_search = "package_search"
 
-@app.route('/')
+@app.route('/', methods=["GET","POST"])
 def index():
     # TODO improve the default list to be the latest 10 datasets or something relevant
-    row_limit = 10
     #items = get_datasets_with_active_datastores(url + "?" + "rows=" + str(row_limit))
-    return render_template('index.jinja2.html', 
+    if request.method == "GET":
+        return render_template('index.jinja2.html', 
+            rows=get_recently_updated_datasets(url=endpoint+action_package_search))
+    else:
+        return render_template('index.jinja2.html', 
                            rows=temp)
 
 @app.route('/search', methods=["POST"])

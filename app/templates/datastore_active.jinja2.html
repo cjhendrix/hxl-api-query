@@ -22,7 +22,7 @@
                 <thead>
                     <tr>
                         <th>Dataset</th>
-                        <th>Organization</th>
+                        <th>Resource</th>
                         <th>Updated</th>
                     </tr>
                 </thead>
@@ -30,8 +30,8 @@
                     {% for row in rows %}
                         <tr style="display: none;">
                             <td><a href="{{ base_url ~ row.package_name}}">{{ row.package_title }}</span></td>
-                            <td><a href="{{ base_url ~ row.org_name}}">{{ row.org_title }}</span></td>
-                            <td><span>{{ row.metadata_updated }}</span></td>
+                            <td><span>{{ row.resource_name }}</span></td>
+                            <td><span>{{ row.revision_timestamp }}</span></td>
                         </tr>
                     {% endfor %}
                 </tbody>

@@ -30,6 +30,23 @@ def get_datasets_with_active_datastores(url):  #2nd version main
                     dataset_list.append(resource_dict)
     return dataset_list
 
+def get_recently_updated_datasets(url):
+    dataset_list = []
+    resource_dict = {}
+    parsed_json = get_json_from_ckan(url)
+    results = parsed_json.get("result").get("results")
+    for package in results:
+        resource_dict["package_title"] = package.get("title")
+        resource_dict["package_name"] = package.get("name")
+        resource_dict["metadata_modified"] = \
+                        dateutil.parser.parse(package.get(
+                        "metadata_modified")).strftime('%Y-%m-%d %H:%M')
+        resource_dict["org_title"] = package.get("organization").get("title")
+        resource_dict["org_name"] = package.get("organization").get("name")
+        dataset_list.append(resource_dict)
+    return dataset_list
+
+
 #HELPER FUNCTIONS       
 def check_datastore_active(resource_id):
     call = "https://data.hdx.rwlabs.org/api/3/action/resource_show?id=" + resource_id
